@@ -49,21 +49,6 @@ app.get('/archived', function (request, response) {
 	})
 })
 
-// Get task by id
-app.get('/:id', function(request, response, next){
-	var id = request.params.id;
-	tasksDatabase.query(
-		'SELECT * FROM task WHERE id ="' + id + '" LIMIT 1',
-		function(err, rows){
-			if(!err)
-				response.json(rows)
-
-			else
-				console.log(response.json(err))
-		})
-})
-
-
 // Add new task
 app.post('/addTask', function(request, response, next){
 	console.log('Adding a new task with request: ' + request.body)
