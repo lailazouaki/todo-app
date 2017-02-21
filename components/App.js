@@ -1,7 +1,8 @@
 var React = require('react');
 var axios = require('axios');
 
-var TodoList = require('./TodoList')
+var TodoList = require('./TodoList');
+var AddTodo = require('./AddTodo');
 
 var App = React.createClass({
 
@@ -44,15 +45,21 @@ var App = React.createClass({
 	},
 
 	addNewTask: function (taskDescription){
+		console.log('Adding task...')
 		var self = this;
 		var newTask = {description: taskDescription, isDone: 0}
-		axios.post(self.state.baseUrl, newTask)
+
+		axios.post(self.state.baseUrl + 'addTask', newTask)
 			.then(function(response){
-				var allTasks = this.state.tasks;
+				console.log('Responding..')
+				var allTasks = self.state.tasks;
 				allTasks.push(newTask);
-				this.setState({
+				self.setState({
 					tasks: allTasks
 				})
+
+				self.getAllTasks();
+				console.log('Task added.')
 			})
 			.catch(function(error){
 				console.log('Error in POSTing a new task: ' + error)
@@ -64,28 +71,17 @@ var App = React.createClass({
 	},
 
 	deleteTask: function (id){
+		console.log('Deleting task...well, archiving.')
 		var self = this;
-		axios.delete(self.state.baseUrl + 'delete/' + id)
+		axios.put(self.state.baseUrl + 'delete/' + id)
 			.then(function(response){
-				self.removeFromTasks(id)
+				console.log('Ok, lets remove it from the list of current tasks.')
+				self.getAllTasks();
+				// self.getArchivedTasks();
 			})
 			.catch(function(error){
 				console.log('Error in deleting the task id= ' + id + ': ' + error)
 			})
-	},
-
-	removeFromTasks: function(id){
-		var tasks = this.state.tasks;
-		for(var task in tasks){
-			if(task.id === id){
-				var index = tasks.indexOf(task);
-				tasks.splice(index, 1)
-			}
-		}
-
-		this.setState({
-			tasks: tasks
-		})
 	},
 
 	componentWillMount: function () {
@@ -100,7 +96,9 @@ var App = React.createClass({
 				<h2>You have {this.state.tasks.length} tasks to complete</h2>
 				<TodoList
 					title='TodoList'
-					tasks={this.state.tasks}/>
+					tasks={this.state.tasks}
+					deleteTask={this.deleteTask}/>
+				<AddTodo addTask={this.addNewTask}/>
 				<TodoList
 					title='Archived'
 					tasks={this.state.archived}/>
@@ -110,4 +108,5 @@ var App = React.createClass({
 });
 
 module.exports = App;
+
 

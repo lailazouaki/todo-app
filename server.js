@@ -66,6 +66,7 @@ app.get('/:id', function(request, response, next){
 
 // Add new task
 app.post('/addTask', function(request, response, next){
+	console.log('Adding a new task with request: ' + request.body)
 	var description = request.body.description;
 	var isDone = request.body.isDone;
 
@@ -75,6 +76,7 @@ app.post('/addTask', function(request, response, next){
 	var query ='INSERT INTO task (description, isDone) VALUES ("'
 				+ description + '", ' + isDone + ');'
 
+	console.log(query)
 
 	tasksDatabase.query(query, function(err, rows, fields){
 	if(!err)
