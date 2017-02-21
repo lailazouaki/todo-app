@@ -98,39 +98,58 @@ app.put('/update/:id', function(request, response, next){
 // Delete task by id 
 app.delete('/delete/:id', function(request, response){
 	var id = request.params.id;
-	tasksDatabase.query('INSERT INTO archivedTasks SELECT * FROM task WHERE id=' + id + ';', function(err, rows, fields){
-		if(!err){
-			tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
-			tasksDatabase.query('DELETE FROM task WHERE id = ' + id + ';');
-		}
-	})
+	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE id = ' + id + ';');
 })
-
 
 // Delete all tasks
 app.delete('/clear', function (request, response){
 	console.log('Archive all the tasks.')
-	tasksDatabase.query(
-		'INSERT INTO archivedTasks (SELECT * FROM task);',
-		function(err, rows, fields){
-			if(!err){
-				tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
-				tasksDatabase.query('DELETE FROM task;');
-			}
-		}
-	)
+	tasksDatabase.query('UPDATE task SET isArchived = 1;');
 })
 
 // Delete done tasks
 app.delete('/clear-done', function (request, response){
 	console.log('Archive all the DONE tasks.')
-	tasksDatabase.query(
-		'INSERT INTO archivedTasks SELECT * FROM task WHERE isDone = 1;',
-		function(err, rows, fields){
-			if(!err){
-				tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isArchived = 0;')
-				tasksDatabase.query('DELETE FROM task WHERE isDone = 1;')
-			}
-		}
-	)
+	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isDone = 0;')
 })
+
+
+// // Delete task by id 
+// app.delete('/delete/:id', function(request, response){
+// 	var id = request.params.id;
+// 	tasksDatabase.query('INSERT INTO archivedTasks SELECT * FROM task WHERE id=' + id + ';', function(err, rows, fields){
+// 		if(!err){
+// 			tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
+// 			tasksDatabase.query('DELETE FROM task WHERE id = ' + id + ';');
+// 		}
+// 	})
+// })
+
+
+// // Delete all tasks
+// app.delete('/clear', function (request, response){
+// 	console.log('Archive all the tasks.')
+// 	tasksDatabase.query(
+// 		'INSERT INTO archivedTasks (SELECT * FROM task);',
+// 		function(err, rows, fields){
+// 			if(!err){
+// 				tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
+// 				tasksDatabase.query('DELETE FROM task;');
+// 			}
+// 		}
+// 	)
+// })
+
+// // Delete done tasks
+// app.delete('/clear-done', function (request, response){
+// 	console.log('Archive all the DONE tasks.')
+// 	tasksDatabase.query(
+// 		'INSERT INTO archivedTasks SELECT * FROM task WHERE isDone = 1;',
+// 		function(err, rows, fields){
+// 			if(!err){
+// 				tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isArchived = 0;')
+// 				tasksDatabase.query('DELETE FROM task WHERE isDone = 1;')
+// 			}
+// 		}
+// 	)
+// })
