@@ -25,7 +25,7 @@ app.get('/', function (request, response) {
 	var query = 'SELECT * FROM task WHERE isDone = 0;';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
-			console.log('Error: ' + err)
+			console.log(response.json(err))
 
 		else{
 			response.json([rows, rows.length])
@@ -40,7 +40,7 @@ app.get('/archived', function (request, response) {
 	var query = 'SELECT * FROM archivedTasks';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
-			console.log('Error: ' + err)
+			console.log(response.json(err))
 
 		else{
 			response.json([rows, rows.length])
@@ -59,7 +59,7 @@ app.get('/:id', function(request, response, next){
 				response.json(rows)
 
 			else
-				console.log(err)
+				console.log(response.json(err))
 		})
 })
 
@@ -78,9 +78,9 @@ app.post('/addTask', function(request, response, next){
 
 	tasksDatabase.query(query, function(err, rows, fields){
 	if(!err)
-		console.log('Response: ' + response.statusCode);
+		console.log(response.json(rows));
 	else
-		console.log('Error while performing Query: ' + err);
+		console.log(response.json(err));
 	})
 })
 
@@ -90,27 +90,50 @@ app.put('/update/:id', function(request, response, next){
 	var id = request.params.id;
 	var isDone = request.body.isDone;
 	var description = request.body.description;
-	var query = 'UPDATE task SET isDone=' + isDone + ', description="' + description + '" WHERE id= ' + id + ';'
+	var query = 'UPDATE task SET isDone=' + isDone + ', description="' + description + '" WHERE id=' + id + ';'
+	tasksDatabase.query(query, function(err, rows){
+		if(err)
+			response.json(err)
 
-	tasksDatabase.query(query);
+		else
+			response.json(rows)
+	});
 })
 
 // Delete task by id 
-app.delete('/delete/:id', function(request, response){
+app.put('/delete/:id', function(request, response){
 	var id = request.params.id;
-	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE id = ' + id + ';');
+	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE id = ' + id + ';', function(err, rows){
+		if(err)
+			response.json(err)
+
+		else
+			response.json(rows)
+	});
 })
 
 // Delete all tasks
-app.delete('/clear', function (request, response){
+app.put('/clear', function (request, response){
 	console.log('Archive all the tasks.')
-	tasksDatabase.query('UPDATE task SET isArchived = 1;');
+	tasksDatabase.query('UPDATE task SET isArchived = 1;', function(err, rows){
+		if(err)
+			response.json(err)
+
+		else
+			response.json(rows)
+	});
 })
 
 // Delete done tasks
-app.delete('/clear-done', function (request, response){
+app.put('/clear-done', function (request, response){
 	console.log('Archive all the DONE tasks.')
-	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isDone = 0;')
+	tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isDone = 0;', function(err, rows){
+		if(err)
+			response.json(err)
+
+		else
+			response.json(rows)
+	});
 })
 
 
