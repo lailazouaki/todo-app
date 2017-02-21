@@ -22,13 +22,28 @@ tasksDatabase.connect();
 // Display all to-do tasks
 app.get('/', function (request, response) {
 	console.log('Get all the tasks.');
-	var query = 'SELECT * FROM task WHERE isDone = 0;';
+	var query = 'SELECT * FROM task WHERE isArchived = 0;';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
 			console.log(response.json(err))
 
 		else{
 			response.json([rows, rows.length])
+			console.log('Done.')
+		}
+	})
+})
+
+// GET task by id
+app.get('/:id', function (request, response) {
+	var id = request.params.id;
+	var query = 'SELECT * FROM task WHERE (isArchived = 0 AND id='+id + ');';
+	tasksDatabase.query(query, function(err, rows, fields){
+		if(err)
+			console.log(response.json(err))
+
+		else{
+			response.json(rows)
 			console.log('Done.')
 		}
 	})
@@ -37,7 +52,7 @@ app.get('/', function (request, response) {
 // Display all archived tasks
 app.get('/archived', function (request, response) {
 	console.log('Get archived the tasks.');
-	var query = 'SELECT * FROM archivedTasks';
+	var query = 'SELECT * FROM task WHERE isArchived = 1';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
 			console.log(response.json(err))
@@ -47,20 +62,6 @@ app.get('/archived', function (request, response) {
 			console.log('Done.')
 		}
 	})
-})
-
-// Get task by id
-app.get('/:id', function(request, response, next){
-	var id = request.params.id;
-	tasksDatabase.query(
-		'SELECT * FROM task WHERE id ="' + id + '" LIMIT 1',
-		function(err, rows){
-			if(!err)
-				response.json(rows)
-
-			else
-				console.log(response.json(err))
-		})
 })
 
 
@@ -137,44 +138,3 @@ app.put('/clear-done', function (request, response){
 			response.json(rows)
 	});
 })
-
-
-// // Delete task by id 
-// app.delete('/delete/:id', function(request, response){
-// 	var id = request.params.id;
-// 	tasksDatabase.query('INSERT INTO archivedTasks SELECT * FROM task WHERE id=' + id + ';', function(err, rows, fields){
-// 		if(!err){
-// 			tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
-// 			tasksDatabase.query('DELETE FROM task WHERE id = ' + id + ';');
-// 		}
-// 	})
-// })
-
-
-// // Delete all tasks
-// app.delete('/clear', function (request, response){
-// 	console.log('Archive all the tasks.')
-// 	tasksDatabase.query(
-// 		'INSERT INTO archivedTasks (SELECT * FROM task);',
-// 		function(err, rows, fields){
-// 			if(!err){
-// 				tasksDatabase.query('UPDATE archivedTasks SET isArchived = 1 WHERE isArchived = 0');
-// 				tasksDatabase.query('DELETE FROM task;');
-// 			}
-// 		}
-// 	)
-// })
-
-// // Delete done tasks
-// app.delete('/clear-done', function (request, response){
-// 	console.log('Archive all the DONE tasks.')
-// 	tasksDatabase.query(
-// 		'INSERT INTO archivedTasks SELECT * FROM task WHERE isDone = 1;',
-// 		function(err, rows, fields){
-// 			if(!err){
-// 				tasksDatabase.query('UPDATE task SET isArchived = 1 WHERE isArchived = 0;')
-// 				tasksDatabase.query('DELETE FROM task WHERE isDone = 1;')
-// 			}
-// 		}
-// 	)
-// })

@@ -10,7 +10,7 @@ var App = React.createClass({
 		return {
 			baseUrl: 'http://localhost:3000/',
 			tasks: [],
-			archived: []
+			archivedTasks: []
 		}
 	},
 
@@ -32,17 +32,24 @@ var App = React.createClass({
 		axios.get(self.state.baseUrl + 'archived')
 			.then(function (response){
 				self.setState({
-					archived: response.data[0]
+					archivedTasks: response.data[0]
 				})
 			})
 			.catch(function (error){
-				console.log('Error in getting all the tasks: ' + error)
+				console.log('Error in getting all the archived tasks: ' + error)
 			})		
 	},
 
-	getTaskById: function (id){
-		return {}
-	},
+	// getTaskById: function (id){
+	// 	var self = this;
+	// 	axios.get(self.state.baseUrl + 'id')
+	// 		.then(function (response){
+	// 			return response.data[0]
+	// 		})
+	// 		.catch(function (error){
+	// 			console.log('Error in getting the task by id:' + id + ':' + error)
+	// 		})
+	// },
 
 	addNewTask: function (taskDescription){
 		console.log('Adding task...')
@@ -57,8 +64,6 @@ var App = React.createClass({
 				self.setState({
 					tasks: allTasks
 				})
-
-				self.getAllTasks();
 				console.log('Task added.')
 			})
 			.catch(function(error){
@@ -66,18 +71,26 @@ var App = React.createClass({
 			})
 	},
 
-	updateTask: function (id){
-		return {}
+	updateTaskDescription: function (id, newTaskDescription){
+		var self = this;
+		var currentTask = this.getTaskById(id)
+		var updatedTask = {description: newTaskDescription, isDone: currentTask.isDone}
+
+		axios.update(self.state.baseUrl + 'update/' + id, updateTask)
+			.then(function(response){
+				console.log('Edited description of task: ' + id)
+			})
+			.catch(function(error){
+				console.log('Error while editing description of task: ' + id)
+			})
 	},
 
 	deleteTask: function (id){
-		console.log('Deleting task...well, archiving.')
 		var self = this;
 		axios.put(self.state.baseUrl + 'delete/' + id)
 			.then(function(response){
-				console.log('Ok, lets remove it from the list of current tasks.')
 				self.getAllTasks();
-				// self.getArchivedTasks();
+				self.getArchivedTasks();
 			})
 			.catch(function(error){
 				console.log('Error in deleting the task id= ' + id + ': ' + error)
@@ -87,6 +100,7 @@ var App = React.createClass({
 	componentWillMount: function () {
 		this.getAllTasks();
 		this.getArchivedTasks();
+		console.log(this.state.archivedTasks)
 	},
 
 	render: function (){
@@ -97,11 +111,15 @@ var App = React.createClass({
 				<TodoList
 					title='TodoList'
 					tasks={this.state.tasks}
-					deleteTask={this.deleteTask}/>
+					deleteTask={this.deleteTask}
+					updateTaskDescription={this.updateTaskDescription}
+					isArchived={false}/>
 				<AddTodo addTask={this.addNewTask}/>
+				<h2>You have {this.state.archivedTasks.length} archived tasks</h2>
 				<TodoList
 					title='Archived'
-					tasks={this.state.archived}/>
+					tasks={this.state.archivedTasks}
+					isArchived={true}/>
 			</div>
 		);
 	}
