@@ -99,6 +99,7 @@ var App = React.createClass({
 		axios.put(self.state.baseUrl + 'delete/' + id)
 			.then(function(response){
 				self.getCurrentTasks();
+				self.getDoneTasks();
 				self.getArchivedTasks();
 			})
 			.catch(function(error){
@@ -129,6 +130,7 @@ var App = React.createClass({
 				<TodoList
 					title='Completed'
 					tasks={this.state.doneTasks}
+					deleteTask={this.deleteTask}
 					isArchived={false}/>
 				<h2>You have {this.state.archivedTasks.length} archived tasks</h2>
 				<TodoList

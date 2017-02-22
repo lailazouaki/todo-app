@@ -29,7 +29,7 @@ var EditTaskDescription = React.createClass({
 
 	render: function (){
 		var currentDescription = this.props.currentDescription;
-		if(this.props.isArchived)
+		if(this.props.isArchived || this.props.isDone)
 			return <div></div>
 
 		return (

@@ -8,7 +8,7 @@ var TodoTask = React.createClass({
 	render: function (){
 		return (
 			<div>
-				<p>{this.props.description} : {this.props.isDone}</p>
+				<p>{this.props.description}</p>
 				<EditTaskDone
 					id={this.props.id}
 					updateTaskDoneStatus={this.props.updateTaskDoneStatus}

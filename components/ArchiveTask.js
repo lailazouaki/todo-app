@@ -13,7 +13,6 @@ var ArchiveTask = React.createClass({
 	},
 
 	render: function (){
-		var archiving = true;
 		if(this.props.isArchived){
 			return (
 				<div>

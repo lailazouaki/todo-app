@@ -12,7 +12,7 @@ var EditTaskDone = React.createClass({
 	},
 
 	render: function () {
-		if(this.props.isArchived)
+		if(this.props.isArchived || this.props.isDone)
 			return <div></div>
 
 		return (
