@@ -24,7 +24,7 @@ var AddTodo = React.createClass({
 
     render: function (){
         return (
-            <div>
+            <div className='add-todo'>
                 <button onClick={this.openModal}>Add a new task</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}

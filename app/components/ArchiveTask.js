@@ -14,16 +14,17 @@ var ArchiveTask = React.createClass({
 
     render: function (){
         if(this.props.isArchived){
-            return (
-                <div>
-                    <button onClick={this.handleClickUnarchive}>Unarchive</button>
-                </div>
-            )
+            return <div></div>
+            // return (
+            //     <div>
+            //         <button onClick={this.handleClickUnarchive}>Unarchive</button>
+            //     </div>
+            // )
         }
 
         else{
             return (
-                <div>
+                <div className='archive-task'>
                     <button onClick={this.handleClickArchive}>Delete</button>
                 </div>
             )

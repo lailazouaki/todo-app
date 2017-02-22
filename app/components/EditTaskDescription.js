@@ -33,7 +33,7 @@ var EditTaskDescription = React.createClass({
             return <div></div>
 
         return (
-            <div>
+            <div className='edit-task-description'>
                 <button onClick={this.openModal}>Edit</button>
 
                 <Modal

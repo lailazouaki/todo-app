@@ -5,9 +5,19 @@ var EditTaskDone = require('./EditTaskDone');
 
 var TodoTask = React.createClass({
 
+    propTypes: {
+        description: React.PropTypes.string.isRequired,
+        id: React.PropTypes.number.isRequired,
+        isDone: React.PropTypes.bool.isRequired,
+        isArchived: React.PropTypes.bool.isRequired,
+        deleteTask: React.PropTypes.func,
+        updateTaskDescription: React.PropTypes.func,
+        updateTaskDoneStatus: React.PropTypes.func
+    },
+
     render: function (){
         return (
-            <div>
+            <div className='todo-task'>
                 <p>{this.props.description}</p>
                 <EditTaskDone
                     id={this.props.id}

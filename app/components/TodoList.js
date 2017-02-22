@@ -2,6 +2,7 @@ var React = require('react');
 var TodoTask = require('./TodoTask');
 
 var TodoList = React.createClass({
+
     render: function (){
         var deleteTask = this.props.deleteTask
         var isArchived = this.props.isArchived
@@ -22,7 +23,7 @@ var TodoList = React.createClass({
         });
 
         return (
-            <div>
+            <div className='todo-list'>
                 <h2>{this.props.title}</h2>
                 <ul>
                     {todoList}
