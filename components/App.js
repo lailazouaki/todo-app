@@ -40,16 +40,9 @@ var App = React.createClass({
 			})		
 	},
 
-	// getTaskById: function (id){
-	// 	var self = this;
-	// 	axios.get(self.state.baseUrl + 'id')
-	// 		.then(function (response){
-	// 			return response.data[0]
-	// 		})
-	// 		.catch(function (error){
-	// 			console.log('Error in getting the task by id:' + id + ':' + error)
-	// 		})
-	// },
+	getTaskById: function (id, callback){
+		return {}
+	},
 
 	addNewTask: function (taskDescription){
 		console.log('Adding task...')
@@ -72,17 +65,7 @@ var App = React.createClass({
 	},
 
 	updateTaskDescription: function (id, newTaskDescription){
-		var self = this;
-		var currentTask = this.getTaskById(id)
-		var updatedTask = {description: newTaskDescription, isDone: currentTask.isDone}
-
-		axios.update(self.state.baseUrl + 'update/' + id, updateTask)
-			.then(function(response){
-				console.log('Edited description of task: ' + id)
-			})
-			.catch(function(error){
-				console.log('Error while editing description of task: ' + id)
-			})
+		console.log('Call the updateTaskDescription.')
 	},
 
 	deleteTask: function (id){

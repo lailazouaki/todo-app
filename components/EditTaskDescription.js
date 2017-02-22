@@ -13,8 +13,7 @@ var EditTaskDescription = React.createClass({
 		this.setState({modalIsOpen: true})
 	},
 
-	close: function (){
-		console.log('this was called.')
+	closeModal: function (){
 		this.setState({modalIsOpen: false})
 	},
 

@@ -34,21 +34,6 @@ app.get('/', function (request, response) {
 	})
 })
 
-// GET task by id
-app.get('/:id', function (request, response) {
-	var id = request.params.id;
-	var query = 'SELECT * FROM task WHERE (isArchived = 0 AND id='+id + ');';
-	tasksDatabase.query(query, function(err, rows, fields){
-		if(err)
-			console.log(response.json(err))
-
-		else{
-			response.json(rows)
-			console.log('Done.')
-		}
-	})
-})
-
 // Display all archived tasks
 app.get('/archived', function (request, response) {
 	console.log('Get archived the tasks.');
@@ -64,6 +49,20 @@ app.get('/archived', function (request, response) {
 	})
 })
 
+// GET task by id
+app.get('/:id', function (request, response) {
+	var id = request.params.id;
+	var query = 'SELECT * FROM task WHERE (isArchived = 0 AND id='+id + ');';
+	tasksDatabase.query(query, function(err, rows, fields){
+		if(err)
+			console.log(response.json(err))
+
+		else{
+			response.json(rows)
+			console.log('Done.')
+		}
+	})
+})
 
 // Add new task
 app.post('/addTask', function(request, response, next){
