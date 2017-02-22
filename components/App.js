@@ -64,8 +64,19 @@ var App = React.createClass({
 			})
 	},
 
-	updateTaskDescription: function (id, newTaskDescription){
-		console.log('Call the updateTaskDescription.')
+	updateTaskDoneStatus: function(id, taskDescription, newDoneStatus){
+		console.log('called updateTaskDoneStatus')
+		var newTask = {description: taskDescription, isDone: newDoneStatus}
+		console.log(newTask)
+		axios.put(this.state.baseUrl + 'update/' + id, newTask)
+			.catch(function(error){
+				console.log(error)
+			})
+	},
+
+	updateTaskDescription: function (id, newTaskDescription, isDone){
+		var newTask = {description: newTaskDescription, isDone: isDone}
+		axios.put(this.state.baseUrl + 'update/' + id, newTask)
 	},
 
 	deleteTask: function (id){
@@ -83,7 +94,6 @@ var App = React.createClass({
 	componentWillMount: function () {
 		this.getAllTasks();
 		this.getArchivedTasks();
-		console.log(this.state.archivedTasks)
 	},
 
 	render: function (){
@@ -96,6 +106,7 @@ var App = React.createClass({
 					tasks={this.state.tasks}
 					deleteTask={this.deleteTask}
 					updateTaskDescription={this.updateTaskDescription}
+					updateTaskDoneStatus={this.updateTaskDoneStatus}
 					isArchived={false}/>
 				<AddTodo addTask={this.addNewTask}/>
 				<h2>You have {this.state.archivedTasks.length} archived tasks</h2>

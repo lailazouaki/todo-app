@@ -51,6 +51,7 @@ app.get('/archived', function (request, response) {
 
 // GET task by id
 app.get('/:id', function (request, response) {
+	console.log('Get task by id.')
 	var id = request.params.id;
 	var query = 'SELECT * FROM task WHERE (isArchived = 0 AND id='+id + ');';
 	tasksDatabase.query(query, function(err, rows, fields){
@@ -88,7 +89,6 @@ app.post('/addTask', function(request, response, next){
 
 // Update task
 app.put('/update/:id', function(request, response, next){
-	// Assumes we get both columns in the request
 	var id = request.params.id;
 	var isDone = request.body.isDone;
 	var description = request.body.description;

@@ -18,13 +18,12 @@ var EditTaskDescription = React.createClass({
 	},
 
 	handleClickEditDescription: function (){
-		console.log('edit description was called.')
 		var id = this.props.id;
+		var isDone = this.props.isDone;
 		var currentDescription = this.props.currentDescription;
-		var newTaskDescription = document.getElementById('newTaskDescription');
+		var newTaskDescription = document.getElementById('newTaskDescription').value;
 		if (currentDescription !== newTaskDescription){
-			console.log('editing the description.')
-			this.props.updateTaskDescription(id, newTaskDescription);
+			this.props.updateTaskDescription(id, newTaskDescription, isDone);
 		}
 	},
 
