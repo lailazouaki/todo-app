@@ -48,7 +48,6 @@ app.get('/archived', function (request, response) {
 		}
 	})
 })
-
 // GET task by id
 app.get('/:id', function (request, response) {
 	console.log('Get task by id.')
@@ -64,7 +63,6 @@ app.get('/:id', function (request, response) {
 		}
 	})
 })
-
 // Add new task
 app.post('/addTask', function(request, response, next){
 	console.log('Adding a new task with request: ' + request.body)
