@@ -1,2 +1,2 @@
 # todo-app
-To-do app in ReactJS/NodeJS
+To-do app in ReactJS/NodeJS to learn !
