@@ -3,7 +3,6 @@ var React = require('react');
 var EditTaskDone = React.createClass({
 
 	handleCheckboxChange: function (){
-		console.log('called handleCheckboxChange')
 		var id = this.props.id
 		var isDoneBool = !this.props.isDone
 		var isDone = isDoneBool? 1 : 0

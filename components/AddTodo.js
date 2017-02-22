@@ -17,10 +17,6 @@ var AddTodo = React.createClass({
 		this.setState({modalIsOpen: false})
 	},
 
-	afterOpenModal: function () {
-		console.log('after open modal');
-	},
-
 	handleClickAddTask: function () {
 		var taskDescription = document.getElementById('taskDescription').value;
 		this.props.addTask(taskDescription)
@@ -32,7 +28,6 @@ var AddTodo = React.createClass({
 				<button onClick={this.openModal}>Add a new task</button>
 				<Modal
 					isOpen={this.state.modalIsOpen}
-					onAfterOpen={this.afterOpenModal}
 					onRequestClose={this.closeModal}
 					contentLabel='Add a new task'>
 

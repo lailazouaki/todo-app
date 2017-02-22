@@ -55,13 +55,11 @@ var App = React.createClass({
 	},
 
 	addNewTask: function (taskDescription){
-		console.log('Adding task...')
 		var self = this;
 		var newTask = {description: taskDescription, isDone: 0}
 
 		axios.post(self.state.baseUrl + 'addTask', newTask)
 			.then(function(response){
-				console.log('Responding..')
 				var allTasks = self.state.tasks;
 				allTasks.push(newTask);
 				self.setState({
@@ -84,10 +82,8 @@ var App = React.createClass({
 	},
 
 	updateTaskDoneStatus: function(id, taskDescription, newDoneStatus){
-		console.log('called updateTaskDoneStatus')
 		var self = this;
 		var newTask = {description: taskDescription, isDone: newDoneStatus}
-		console.log(newTask)
 		axios.put(this.state.baseUrl + 'update/' + id, newTask)
 			.then(function(response){
 				self.getCurrentTasks();

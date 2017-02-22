@@ -36,7 +36,7 @@ app.get('/', function (request, response) {
 
 // Display all archived tasks
 app.get('/archived', function (request, response) {
-	console.log('Get archived the tasks.');
+	console.log('Get the archived tasks.');
 	var query = 'SELECT * FROM task WHERE isArchived = 1';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
@@ -51,7 +51,7 @@ app.get('/archived', function (request, response) {
 
 // Display all done tasks
 app.get('/done', function (request, response) {
-	console.log('Get archived the tasks.');
+	console.log('Get all the done tasks.');
 	var query = 'SELECT * FROM task WHERE (isDone = 1 AND isArchived = 0)';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
