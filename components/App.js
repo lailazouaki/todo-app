@@ -10,11 +10,12 @@ var App = React.createClass({
 		return {
 			baseUrl: 'http://localhost:3000/',
 			tasks: [],
-			archivedTasks: []
+			archivedTasks: [],
+			doneTasks: [],
 		}
 	},
 
-	getAllTasks: function (){
+	getCurrentTasks: function (){
 		var self = this;
 		axios.get(self.state.baseUrl)
 			.then(function (response){
@@ -40,8 +41,17 @@ var App = React.createClass({
 			})		
 	},
 
-	getTaskById: function (id, callback){
-		return {}
+	getDoneTasks: function () {
+		var self = this
+		axios.get(self.state.baseUrl + 'done')
+			.then(function(response){
+				self.setState({
+					doneTasks: response.data[0]
+				})
+			})
+			.catch(function(error){
+				console.log('Error in getting all the done tasks:' + error)
+			})
 	},
 
 	addNewTask: function (taskDescription){
@@ -64,15 +74,35 @@ var App = React.createClass({
 			})
 	},
 
-	updateTaskDescription: function (id, newTaskDescription){
-		console.log('Call the updateTaskDescription.')
+	updateTaskDescription: function (id, newTaskDescription, isDone){
+		var self = this;
+		var newTask = {description: newTaskDescription, isDone: isDone}
+		axios.put(this.state.baseUrl + 'update/' + id, newTask)
+			.then(function(response){
+				self.getCurrentTasks();
+			})
+	},
+
+	updateTaskDoneStatus: function(id, taskDescription, newDoneStatus){
+		console.log('called updateTaskDoneStatus')
+		var self = this;
+		var newTask = {description: taskDescription, isDone: newDoneStatus}
+		console.log(newTask)
+		axios.put(this.state.baseUrl + 'update/' + id, newTask)
+			.then(function(response){
+				self.getCurrentTasks();
+				self.getDoneTasks();
+			})
+			.catch(function(error){
+				console.log(error)
+			})
 	},
 
 	deleteTask: function (id){
 		var self = this;
 		axios.put(self.state.baseUrl + 'delete/' + id)
 			.then(function(response){
-				self.getAllTasks();
+				self.getCurrentTasks();
 				self.getArchivedTasks();
 			})
 			.catch(function(error){
@@ -81,9 +111,9 @@ var App = React.createClass({
 	},
 
 	componentWillMount: function () {
-		this.getAllTasks();
+		this.getCurrentTasks();
+		this.getDoneTasks();
 		this.getArchivedTasks();
-		console.log(this.state.archivedTasks)
 	},
 
 	render: function (){
@@ -96,8 +126,14 @@ var App = React.createClass({
 					tasks={this.state.tasks}
 					deleteTask={this.deleteTask}
 					updateTaskDescription={this.updateTaskDescription}
+					updateTaskDoneStatus={this.updateTaskDoneStatus}
 					isArchived={false}/>
 				<AddTodo addTask={this.addNewTask}/>
+				<h2>You have completed {this.state.doneTasks.length} tasks!</h2>
+				<TodoList
+					title='Completed'
+					tasks={this.state.doneTasks}
+					isArchived={false}/>
 				<h2>You have {this.state.archivedTasks.length} archived tasks</h2>
 				<TodoList
 					title='Archived'

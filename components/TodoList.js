@@ -6,6 +6,7 @@ var TodoList = React.createClass({
 		var deleteTask = this.props.deleteTask
 		var isArchived = this.props.isArchived
 		var updateTaskDescription = this.props.updateTaskDescription
+		var updateTaskDoneStatus = this.props.updateTaskDoneStatus
 		var todoList = this.props.tasks.map(function(task){
 			return <li key={task.id}>
 						{<TodoTask
@@ -15,6 +16,7 @@ var TodoList = React.createClass({
 							deleteTask={deleteTask}
 							isArchived={isArchived}
 							updateTaskDescription={updateTaskDescription}
+							updateTaskDoneStatus={updateTaskDoneStatus}
 						/>}
 					</li>
 		});
