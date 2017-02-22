@@ -4,6 +4,7 @@ var EditTaskDescription = require('./EditTaskDescription');
 var EditTaskDone = require('./EditTaskDone');
 
 var TodoTask = React.createClass({
+
 	render: function (){
 		return (
 			<div>

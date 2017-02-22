@@ -22,7 +22,7 @@ tasksDatabase.connect();
 // Display all to-do tasks
 app.get('/', function (request, response) {
 	console.log('Get all the tasks.');
-	var query = 'SELECT * FROM task WHERE isArchived = 0;';
+	var query = 'SELECT * FROM task WHERE (isArchived = 0 AND isDone = 0);';
 	tasksDatabase.query(query, function(err, rows, fields){
 		if(err)
 			console.log(response.json(err))
@@ -48,6 +48,22 @@ app.get('/archived', function (request, response) {
 		}
 	})
 })
+
+// Display all done tasks
+app.get('/done', function (request, response) {
+	console.log('Get archived the tasks.');
+	var query = 'SELECT * FROM task WHERE (isDone = 1 AND isArchived = 0)';
+	tasksDatabase.query(query, function(err, rows, fields){
+		if(err)
+			console.log(response.json(err))
+
+		else{
+			response.json([rows, rows.length])
+			console.log('Done.')
+		}
+	})
+})
+
 // GET task by id
 app.get('/:id', function (request, response) {
 	console.log('Get task by id.')
