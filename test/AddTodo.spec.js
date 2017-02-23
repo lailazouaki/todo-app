@@ -18,6 +18,8 @@ describe('<AddTodo/>', function () {
 
     it('should render a modal', function (){
         const wrapper = shallow(<AddTodo/>);
+        expect(wrapper.find('.add-todo')).to.have.length(1);
+        expect(wrapper.find('#add-task')).to.have.length(1);
         expect(wrapper.find('Modal')).to.have.length(1);
     });
 

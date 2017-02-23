@@ -17,7 +17,7 @@ var EditTaskDone = React.createClass({
 
         return (
             <div className='edit-task-done'>
-                <button onClick={this.handleCheckboxChange}>Done</button>
+                <button id='set-as-done-button' onClick={this.handleCheckboxChange}>Done</button>
             </div>
         )
     }

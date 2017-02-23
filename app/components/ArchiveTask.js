@@ -15,7 +15,7 @@ var ArchiveTask = React.createClass({
         else{
             return (
                 <div className='archive-task'>
-                    <button onClick={this.handleClickArchive}>Delete</button>
+                    <button id='archive' onClick={this.handleClickArchive}>Delete</button>
                 </div>
             )
         }

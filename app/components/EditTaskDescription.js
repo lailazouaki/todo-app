@@ -34,19 +34,18 @@ var EditTaskDescription = React.createClass({
 
         return (
             <div className='edit-task-description'>
-                <button onClick={this.openModal}>Edit</button>
-
+                <button id='edit-task-description-button' onClick={this.openModal}>Edit</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
                     contentLabel='Edit task description'>
 
                     <h2>Edit task description</h2>
-                    <button onClick={this.closeModal}>Close</button>
+                    <button id='close-edit-description-modal' onClick={this.closeModal}>Close</button>
                     <div>What is the new description of your task?</div>
                     <form>
                         <input id="newTaskDescription"/>
-                        <button onClick={this.handleClickEditDescription}>Save</button>
+                        <button id='save-edited-description' onClick={this.handleClickEditDescription}>Save</button>
                     </form>
                 </Modal>
             </div>
