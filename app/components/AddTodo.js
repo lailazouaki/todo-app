@@ -25,18 +25,18 @@ var AddTodo = React.createClass({
     render: function (){
         return (
             <div className='add-todo'>
-                <button onClick={this.openModal}>Add a new task</button>
+                <button id='add-task' onClick={this.openModal}>Add a new task</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onRequestClose={this.closeModal}
                     contentLabel='Add a new task'>
 
                     <h2>Add a new task</h2>
-                    <button onClick={this.closeModal}>Close</button>
+                    <button id='close-modal' onClick={this.closeModal}>Close</button>
                     <div>What is the description of your task?</div>
                     <form>
-                        <input id="taskDescription"/>
-                        <button onClick={this.handleClickAddTask}>Save</button>
+                        <input id='taskDescription'/>
+                        <button id='save-task' onClick={this.handleClickAddTask}>Save</button>
                     </form>
                 </Modal>
             </div>
