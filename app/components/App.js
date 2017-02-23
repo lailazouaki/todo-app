@@ -115,7 +115,7 @@ var App = React.createClass({
 
     render: function (){
         return (
-            <div>
+            <div className='app'>
                 <h1>To-Do app</h1>
                 <h2>You have {this.state.tasks.length} tasks to complete</h2>
                 <TodoList
