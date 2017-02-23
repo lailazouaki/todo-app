@@ -8,7 +8,7 @@ var TodoTask = React.createClass({
     propTypes: {
         description: React.PropTypes.string,
         id: React.PropTypes.number,
-        isDone: React.PropTypes.bool,
+        isDone: React.PropTypes.number,
         isArchived: React.PropTypes.bool,
         deleteTask: React.PropTypes.func,
         updateTaskDescription: React.PropTypes.func,
